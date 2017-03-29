@@ -51,6 +51,26 @@ class CommonActions {
       .then(this.checkStatus)
       .then(this.parseJson);
   }
+
+  postJson(url, data, fetchOptions = {}) {
+    fetchOptions.body = data;
+    const defaultFetchOptions = {
+      method: 'post',
+      body: null,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    };
+    const modifiedFetchOptions = deepmerge(defaultFetchOptions, fetchOptions);
+
+    if (fetchOptions.body) {
+      modifiedFetchOptions.body = JSON.stringify(fetchOptions.body);
+    }
+    return fetch(url, modifiedFetchOptions)
+      .then(this.checkStatus)
+      .then(this.parseJson);
+  }
 }
 
 export default new CommonActions()

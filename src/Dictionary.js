@@ -36,6 +36,14 @@ class Dictionary extends Component {
   }
 
   toggleAdd = () => this.setState({ showAddTerm: !this.state.showAddTerm });
+  addTerm = (term) => {
+    const terms = this.state.terms.slice();
+    terms.push(term);
+    console.log(terms);
+    this.setState({
+      terms
+    });
+  };
 
   render() {
     const { showAddTerm } = this.state;
@@ -51,7 +59,9 @@ class Dictionary extends Component {
         <Button bsStyle="success" onClick={this.toggleAdd}>
           <Glyphicon glyph="plus-sign" /> Add term
         </Button>
-        {showAddTerm && <AddTerm hide={this.toggleAdd} />}
+        {showAddTerm && <AddTerm
+          addTerm={this.addTerm}
+          hide={this.toggleAdd} />}
         <div className="terms">
           {this.state.terms.map(term => {
             return <Term key={term.id} term={term} />;
